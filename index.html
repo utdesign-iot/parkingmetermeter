@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link href="parkingstyles.css" rel="stylesheet">
+
+<script>
+var timerStarted = false;
+var startMinutes = 0;
+var addMinutes = 0;
+var numMinutes = 0;
+
+
+
+function run(duration, display) {
+    var timer = duration, minutes, seconds;
+
+    setInterval(function () {
+
+        $.ajax({url: "http://10.21.62.85:3000/getTimer",
+                    //contentType: 'application/json',
+                    crossDomain: true,
+                    type: 'GET',
+                    success: function (result) {
+                    console.log(result);
+                    console.log(result.minutes);
+                     addMinutes = result.minutes;
+                }});
+
+    }, 800);
+
+
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        //Call Server
+        //Logic JSON -> Int
+        //timer + Int*60
+
+        display.text(minutes + ":" + seconds);
+        timer += (addMinutes*60)
+        addMinutes = 0;
+
+
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+jQuery(function ($) {
+
+    display = $('#time');
+    run(numMinutes, display);
+});
+
+</script>
+
+<body>
+    <h1><div><span id="time">00:00</span> </div><h1>
+
+</body>
+
+</html>
