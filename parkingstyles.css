@@ -1,0 +1,11 @@
+h1 {
+   font-family: "Arial";
+   font-size: 200px;
+   text-align: center;
+   vertical-align:bottom;
+}
+
+body  {
+  color: white;
+  background: black;
+}
