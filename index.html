@@ -11,24 +11,23 @@ var startMinutes = 0;
 var addMinutes = 0;
 var numMinutes = 0;
 
-
+const endPoint = "https://powerful-ravine-45557.herokuapp.com"
 
 function run(duration, display) {
     var timer = duration, minutes, seconds;
 
     setInterval(function () {
 
-        $.ajax({url: "http://10.21.62.85:3000/getTimer",
+        $.ajax({url: endPoint + "/getTimer",
                     //contentType: 'application/json',
                     crossDomain: true,
                     type: 'GET',
                     success: function (result) {
-                    console.log(result);
-                    console.log(result.minutes);
+                      console.log(result.minutes);
                      addMinutes = result.minutes;
                 }});
 
-    }, 800);
+    }, 3000);
 
 
     setInterval(function () {
@@ -44,6 +43,7 @@ function run(duration, display) {
 
         display.text(minutes + ":" + seconds);
         timer += (addMinutes*60)
+
         addMinutes = 0;
 
 
